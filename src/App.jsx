@@ -21,12 +21,14 @@ const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query = "") => {
     setIsLoading(true);
     setErrorMessage("");
     try {
       const response = await fetch(
-        `${BASE_URL}/discover/movie?sort_by=popularity.desc`,
+        query
+          ? `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+          : `${BASE_URL}/discover/movie?sort_by=popularity.desc`,
         API_OPTIONS
       );
       if (!response.ok) {
@@ -50,8 +52,8 @@ const App = () => {
     }
   };
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(searchTerm);
+  }, [searchTerm]);
 
   return (
     <main>
@@ -77,7 +79,7 @@ const App = () => {
           ) : (
             <ul>
               {movieList.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />  
+                <MovieCard key={movie.id} movie={movie} />
               ))}
             </ul>
           )}
