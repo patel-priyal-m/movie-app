@@ -27,7 +27,7 @@ const MovieCard = ({ movie }) => {
           <p className="year">
             {movie.release_date ? movie.release_date.split("-")[0] : ""}
           </p>
-          {movie.release_date? <span>•</span> : ""}
+          
         </div>
       </div>
     </div>
